@@ -1,0 +1,17 @@
+# Ansible runtime
+ansible.log
+*.retry
+.ansible_facts/
+collections/
+
+# Editor / OS noise
+.*.sw?
+.DS_Store
+Thumbs.db
+
+# Local credentials and secrets
+*.pem
+*.key
+vault-password.txt
+id_ed25519_oelab
+id_ed25519_oelab.pub

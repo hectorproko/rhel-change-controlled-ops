@@ -1,0 +1,6 @@
+
+# Variables visible to every host. Role defaults live in
+# roles/<role>/defaults/main.yml; only override here when a value
+# should be identical estate-wide AND differ from the role default.
+#
+# Currently empty. CRQ-002 will add users_list and ssh_permit_root_login.

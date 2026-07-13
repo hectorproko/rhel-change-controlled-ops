@@ -1,0 +1,11 @@
+# Pre-CRQ-002 state: connecting as root via key auth.
+# CRQ-002 will create the 'admin' user and flip ansible_user below.
+
+[production]
+servera ansible_host=10.0.0.101
+serverb ansible_host=10.0.0.74
+serverc ansible_host=10.0.0.56
+serverd ansible_host=10.0.0.36
+
+[all:vars]
+ansible_user=root

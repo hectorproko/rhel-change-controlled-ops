@@ -1,0 +1,14 @@
+# Ansible collections required by this project.
+#
+# Install with:
+#   ansible-galaxy collection install -r requirements.yml
+#
+# Collections are installed under ./collections (set by ansible.cfg).
+# The ./collections directory is gitignored so each operator installs
+# locally; the source of truth is this file.
+
+collections:
+  - name: ansible.posix
+    version: ">=1.5.0"
+  - name: community.general
+    version: ">=7.0.0"
