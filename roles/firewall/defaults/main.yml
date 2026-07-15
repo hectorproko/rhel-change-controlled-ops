@@ -1,0 +1,26 @@
+---
+# defaults/main.yml  firewall
+#
+# Declarative firewalld configuration. Override in group_vars/ or
+# host_vars/ to add services or ports without editing this file.
+
+# The firewalld zone that receives all changes made by this role.
+# 'public' is the RHEL default and is appropriate for most lab hosts.
+firewall_default_zone: public
+
+# Services to allow in the default zone.
+# Each entry maps to a firewalld service name (e.g. 'ssh', 'http').
+# Run `firewall-cmd --get-services` on a managed host for the full list.
+firewall_services:
+  - ssh
+
+# TCP/UDP ports to open explicitly when no named service exists.
+# Format: "<port>/<protocol>", e.g. "8080/tcp" or "53/udp".
+firewall_ports: []
+
+# Services to explicitly remove from the default zone.
+# Useful when inheriting a host with overly permissive rules.
+firewall_remove_services: []
+
+# Ports to explicitly remove from the default zone.
+firewall_remove_ports: []

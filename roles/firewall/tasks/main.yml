@@ -1,0 +1,89 @@
+---
+# tasks/main.yml — firewall
+#
+# Manages firewalld state and rules. Tasks are declarative and
+# idempotent: re-running changes nothing when the host already
+# matches the variable definitions.
+#
+# Relationship to baseline_hardening:
+#   baseline_hardening ensures firewalld is installed, started, and
+#   enabled. This role manages the *rules* — which services and ports
+#   are allowed. Both roles can run together without conflict.
+
+- name: Ensure firewalld is installed
+  ansible.builtin.dnf:
+    name: firewalld
+    state: present
+  tags: [firewall]
+
+- name: Ensure firewalld is enabled and running
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+  tags: [firewall]
+
+# ---------- Default zone ----------
+
+- name: Read current default zone
+  ansible.builtin.command:
+    cmd: firewall-cmd --get-default-zone
+  register: fw_current_zone
+  changed_when: false
+  check_mode: false
+  tags: [firewall]
+
+- name: Set default zone to {{ firewall_default_zone }}
+  ansible.builtin.command:
+    cmd: "firewall-cmd --set-default-zone={{ firewall_default_zone }}"
+  when: fw_current_zone.stdout | trim != firewall_default_zone
+  notify: Reload firewalld
+  tags: [firewall]
+
+# ---------- Allow services ----------
+
+- name: Enable allowed services in default zone
+  ansible.posix.firewalld:
+    zone: "{{ firewall_default_zone }}"
+    service: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  loop: "{{ firewall_services }}"
+  tags: [firewall]
+
+# ---------- Allow explicit ports ----------
+
+- name: Enable allowed ports in default zone
+  ansible.posix.firewalld:
+    zone: "{{ firewall_default_zone }}"
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  loop: "{{ firewall_ports }}"
+  tags: [firewall]
+
+# ---------- Remove unwanted services ----------
+
+- name: Remove disallowed services from default zone
+  ansible.posix.firewalld:
+    zone: "{{ firewall_default_zone }}"
+    service: "{{ item }}"
+    state: disabled
+    permanent: true
+    immediate: true
+  loop: "{{ firewall_remove_services }}"
+  tags: [firewall]
+
+# ---------- Remove unwanted ports ----------
+
+- name: Remove disallowed ports from default zone
+  ansible.posix.firewalld:
+    zone: "{{ firewall_default_zone }}"
+    port: "{{ item }}"
+    state: disabled
+    permanent: true
+    immediate: true
+  loop: "{{ firewall_remove_ports }}"
+  tags: [firewall]
