@@ -227,15 +227,28 @@ working SSH. Keep the VM consoles reachable for the whole change window.
 
 ## 9. Results
 
-| Field            | Value                     |
-|------------------|---------------------------|
-| Actual start     | <fill in>                 |
-| Actual end       | <fill in>                 |
-| Outcome          | <Success / Rolled back>   |
-| Hosts succeeded  | <servera, serverb, ...>   |
-| Hosts deferred   | <none / ...>              |
-| Attached output  | <path to captured output> |
-| Git commit / tag | <commit hash>             |
+| Field            | Value                                                                                                                                                      |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Actual start     | 2026-07-15                                                                                                                                                 |
+| Actual end       | 2026-07-15                                                                                                                                                 |
+| Outcome          | Success - admin account created fleet-wide with key-based login and passwordless sudo; direct root SSH disabled; inventory switched to ansible_user=admin. |
+| Hosts succeeded  | servera (10.0.0.101), serverb (10.0.0.74), serverc (10.0.0.56), serverd (10.0.0.36)                                                                        |
+| Hosts deferred   | None                                                                                                                                                       |
+| Attached output  | Manual verification captured below (no 03-validation.yml yet; full validation playbook is a later CRQ).                                                    |
+| Git commit / tag | <6946859: output of `git rev-parse --short HEAD` after you commit this change>                                                                             |
+
+Verification evidence:
+
+- Step 3 gate (admin key login + sudo), all four hosts:
+  `id` reported `uid=1001(admin)` with supplementary groups `wheel` and
+  `admin`; `sudo -l` / `sudo -n true` returned NOPASSWD success on every
+  host. No host failed the gate.
+- Post-change sshd posture, all four hosts:
+  `sshd -T | grep -i permitrootlogin` returned `permitrootlogin no`.
+- Root login rejection confirmed:
+  `ssh -i ./id_ed25519_oelab root@10.0.0.101 'true'` returned
+  "Permission denied (publickey)", i.e. direct root SSH is refused.
+- Control-node
 
 ---
 
