@@ -1,0 +1,94 @@
+---
+# tasks/main.yml (baseline_hardening)
+# Baseline: packages, SELinux, firewalld, auditd, chrony, sshd posture,
+# MOTD, wheel sudo. sshd lives here for now; the drop-in is validated
+# with `sshd -t` before it is written, and PermitRootLogin defaults to
+# 'yes' so the first apply cannot lock out root.
+
+- name: Install baseline packages
+  ansible.builtin.dnf:
+    name: "{{ baseline_packages }}"
+    state: present
+  tags: [packages]
+
+- name: Ensure SELinux is {{ baseline_selinux_state }} (persists across reboot)
+  ansible.posix.selinux:
+    policy: targeted
+    state: "{{ baseline_selinux_state }}"
+  tags: [selinux]
+
+- name: Ensure firewalld is enabled and running
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+  tags: [firewall]
+
+- name: Read current firewalld default zone
+  ansible.builtin.command:
+    cmd: firewall-cmd --get-default-zone
+  register: baseline_fwd_zone
+  changed_when: false
+  check_mode: false
+  tags: [firewall]
+
+- name: Set firewalld default zone to {{ baseline_firewalld_default_zone }}
+  ansible.builtin.command:
+    cmd: "firewall-cmd --set-default-zone={{ baseline_firewalld_default_zone }}"
+  when: baseline_fwd_zone.stdout | trim != baseline_firewalld_default_zone
+  tags: [firewall]
+
+- name: Permit baseline firewalld services in default zone
+  ansible.posix.firewalld:
+    zone: "{{ baseline_firewalld_default_zone }}"
+    service: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  loop: "{{ baseline_firewalld_services }}"
+  tags: [firewall]
+
+- name: Ensure auditd is enabled and running
+  ansible.builtin.service:
+    name: auditd
+    state: started
+    enabled: true
+  tags: [auditd]
+
+- name: Ensure chrony is enabled and running
+  ansible.builtin.service:
+    name: chronyd
+    state: started
+    enabled: true
+  tags: [chrony]
+
+- name: Deploy SSH baseline drop-in config
+  ansible.builtin.template:
+    src: sshd_baseline.conf.j2
+    dest: "{{ baseline_sshd_dropin_path }}"
+    owner: root
+    group: root
+    mode: '0600'
+    validate: '/usr/sbin/sshd -t -f %s'
+  notify: Restart sshd
+  tags: [ssh]
+
+- name: Deploy MOTD login banner
+  ansible.builtin.template:
+    src: motd.j2
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: '0644'
+  when: baseline_motd_enabled | bool
+  tags: [motd]
+
+- name: Deploy passwordless-sudo policy for wheel group
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/wheel-nopass
+    content: "%wheel ALL=(ALL) NOPASSWD: ALL\n"
+    owner: root
+    group: root
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  tags: [sudo]

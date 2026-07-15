@@ -1,0 +1,12 @@
+---
+# 01-baseline.yml
+# Applies the baseline to [production]. Built up one role at a time.
+# Currently: baseline_hardening only. users/firewall/auditd get added
+# as we build them; CRQ-004 later splits sshd into a dedicated ssh role.
+
+- name: Apply baseline to production fleet
+  hosts: production
+  become: true
+
+  roles:
+    - role: baseline_hardening

@@ -1,0 +1,29 @@
+---
+
+# defaults/main.yml (baseline_hardening)
+# Override in group_vars/, host_vars/, or playbook vars.
+
+baseline_packages:
+  - chrony
+  - audit
+  - firewalld
+  - policycoreutils-python-utils
+
+# 'enforcing' for production. 'permissive' only inside a documented
+# diagnostic window recorded in the CRQ.
+baseline_selinux_state: enforcing
+
+baseline_firewalld_default_zone: public
+baseline_firewalld_services:
+  - ssh
+
+# sshd posture. PermitRootLogin defaults to 'yes' on purpose: the FIRST
+# apply onto a fresh host must not lock out a control node still
+# connecting as root. Flip to 'no' via group_vars/all.yml only after the
+# admin account exists and key login is verified. That is CRQ-002.
+baseline_sshd_permit_root_login: "yes"
+baseline_sshd_password_authentication: "no"
+baseline_sshd_dropin_path: /etc/ssh/sshd_config.d/00-baseline.conf
+
+baseline_motd_enabled: true
+

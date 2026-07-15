@@ -1,0 +1,8 @@
+{{ ansible_managed | comment }}
+# Source role: baseline_hardening
+# Edits made directly to this file will be overwritten.
+
+PermitRootLogin {{ baseline_sshd_permit_root_login }}
+PasswordAuthentication {{ baseline_sshd_password_authentication }}
+ChallengeResponseAuthentication no
+UsePAM yes

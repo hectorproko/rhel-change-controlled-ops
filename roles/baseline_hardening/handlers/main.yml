@@ -1,0 +1,7 @@
+---
+# handlers/main.yml (baseline_hardening)
+
+- name: Restart sshd
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
