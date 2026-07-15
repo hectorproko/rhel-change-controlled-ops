@@ -1,0 +1,88 @@
+---
+# tasks/main.yml — users
+#
+# Manages OS groups, users, SSH authorized keys, and sudoers drop-ins.
+# Every task is idempotent: re-running produces no changes when the
+# system already matches the variable definitions.
+
+# ---------- Groups ----------
+
+- name: Create required OS groups
+  ansible.builtin.group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid | default(omit) }}"
+    state: present
+  loop: "{{ users_groups }}"
+  loop_control:
+    label: "{{ item.name }}"
+  tags: [users, groups]
+
+# ---------- Users ----------
+
+- name: Create or remove users
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    comment: "{{ item.comment | default(omit) }}"
+    groups: "{{ item.groups | default([]) }}"
+    append: true
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    create_home: true
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ users_list }}"
+  loop_control:
+    label: "{{ item.name }}"
+  tags: [users]
+
+# ---------- SSH authorized keys ----------
+# Only manages keys for users explicitly listed in users_list.
+# An empty ssh_authorized_keys list means no keys are added.
+
+- name: Manage SSH authorized keys
+  ansible.posix.authorized_key:
+    user: "{{ item.0.name }}"
+    key: "{{ item.1 }}"
+    state: present
+  loop: "{{ users_list | subelements('ssh_authorized_keys', skip_missing=True) }}"
+  loop_control:
+    label: "{{ item.0.name }}"
+  when: item.0.state | default('present') == 'present'
+  tags: [users, ssh_keys]
+
+# ---------- Sudoers ----------
+# Writes /etc/sudoers.d/ops-admin with NOPASSWD entries for the
+# groups listed in users_sudo_nopasswd_groups. Validated with
+# visudo before writing so a bad template cannot break sudo.
+
+- name: Deploy ops-admin sudoers drop-in
+  ansible.builtin.template:
+    src: sudoers.j2
+    dest: /etc/sudoers.d/ops-admin
+    owner: root
+    group: root
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  when: users_sudo_nopasswd_groups | length > 0
+  tags: [users, sudo]
+
+# ---------- Break-glass account ----------
+# The break-glass user is created locked (no password, no shell)
+# by default. Setting users_breakglass_enabled: true unlocks it
+# by assigning a shell; the account still requires an SSH key.
+
+- name: Manage break-glass account
+  ansible.builtin.user:
+    name: "{{ users_breakglass_name }}"
+    groups: "{{ users_breakglass_groups }}"
+    append: true
+    shell: "{{ '/bin/bash' if users_breakglass_enabled else '/sbin/nologin' }}"
+    create_home: true
+    comment: "Break-glass emergency account — normally locked"
+    state: present
+  tags: [users, breakglass]
+
+- name: Lock break-glass account when disabled
+  ansible.builtin.user:
+    name: "{{ users_breakglass_name }}"
+    password_lock: true
+  when: not users_breakglass_enabled
+  tags: [users, breakglass]

@@ -1,0 +1,47 @@
+---
+# defaults/main.yml — users
+#
+# Override these in group_vars/ or host_vars/.
+# Users and groups defined here are created on every run (idempotent).
+
+# OS groups to create. The admin and operations groups are standard
+# in this lab. Add entries as your environment grows.
+users_groups:
+  - name: admin
+    gid: 1001
+  - name: operations
+    gid: 1002
+
+# Users to create. Each entry can include:
+#   name:                 (required) login name
+#   comment:              (optional) GECOS full name
+#   groups:               (optional) additional supplementary groups
+#   shell:                (optional) login shell, default /bin/bash
+#   ssh_authorized_keys:  (optional) list of public key strings
+#   state:                (optional) present | absent, default present
+#
+# Example of adding an operator account with an SSH key:
+#
+#   - name: jsmith
+#     comment: "Jane Smith"
+#     groups: [operations]
+#     shell: /bin/bash
+#     ssh_authorized_keys:
+#       - "ssh-ed25519 AAAA... jsmith@workstation"
+#
+users_list: []
+
+# Groups that receive a passwordless sudo drop-in via
+# /etc/sudoers.d/. The 'admin' group is granted sudo here;
+# 'wheel' is handled separately by baseline_hardening.
+users_sudo_nopasswd_groups:
+  - admin
+
+# Break-glass account — disabled by default.
+# Enable only during emergencies that cannot be handled by normal
+# accounts. Revert and disable in the follow-up CRQ.
+users_breakglass_enabled: false
+users_breakglass_name: breakglass
+users_breakglass_groups:
+  - wheel
+  - admin

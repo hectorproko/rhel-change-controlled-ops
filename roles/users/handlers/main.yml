@@ -1,0 +1,6 @@
+---
+# handlers/main.yml — users
+#
+# Users and groups don't require service restarts. This file is kept
+# for consistency with the other roles and to allow future handlers
+# (e.g., LDAP cache flush) without restructuring the role.

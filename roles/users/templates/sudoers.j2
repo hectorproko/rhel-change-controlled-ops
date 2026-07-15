@@ -1,0 +1,8 @@
+{{ ansible_managed | comment }}
+# Source: roles/users/templates/sudoers.j2
+# Grants passwordless sudo to the groups listed in
+# users_sudo_nopasswd_groups. Validated with visudo before deploy.
+
+{% for group in users_sudo_nopasswd_groups %}
+%{{ group }} ALL=(ALL) NOPASSWD: ALL
+{% endfor %}
