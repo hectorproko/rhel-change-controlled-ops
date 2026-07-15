@@ -1,6 +1,20 @@
+---
+# group_vars/all.yml
+# Variables visible to every host.
 
-# Variables visible to every host. Role defaults live in
-# roles/<role>/defaults/main.yml; only override here when a value
-# should be identical estate-wide AND differ from the role default.
-#
-# Currently empty. CRQ-002 will add users_list and ssh_permit_root_login.
+# CRQ-002 step 1: dedicated admin user (key-based, no password).
+# Created by the users role via --tags users.
+users_list:
+  - name: admin
+    comment: "Lab Admin Account"
+    groups:
+      - admin
+      - wheel
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHaIzZYzTiGnj6D/v/9VtFViT7PzhZvSRFcUAd20OD4U rhel-oe-build-lab control node"
+
+# CRQ-002 step 4: disable direct root SSH now that admin key login is
+# verified. Consumed by the sshd task in baseline_hardening (pre-CRQ-004
+# this variable is still baseline_sshd_*, not ssh_*).
+baseline_sshd_permit_root_login: "no"

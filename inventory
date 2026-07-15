@@ -8,4 +8,5 @@ serverc ansible_host=10.0.0.56
 serverd ansible_host=10.0.0.36
 
 [all:vars]
-ansible_user=root
+ansible_user=admin
+ansible_become=true
