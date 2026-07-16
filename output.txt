@@ -1,0 +1,1782 @@
+
+PLAY [Validate Operating Environment posture] **********************************
+
+TASK [Collect SELinux state] ***************************************************
+Thursday 16 July 2026  15:57:38 +0000 (0:00:00.050)       0:00:00.050 ********* 
+ok: [serverc]
+ok: [serverb]
+ok: [servera]
+ok: [serverd]
+
+TASK [Assert SELinux is Enforcing] *********************************************
+Thursday 16 July 2026  15:57:39 +0000 (0:00:00.544)       0:00:00.594 ********* 
+ok: [servera] => {
+    "changed": false,
+    "msg": "PASS — SELinux: Enforcing"
+}
+ok: [serverb] => {
+    "changed": false,
+    "msg": "PASS — SELinux: Enforcing"
+}
+ok: [serverc] => {
+    "changed": false,
+    "msg": "PASS — SELinux: Enforcing"
+}
+ok: [serverd] => {
+    "changed": false,
+    "msg": "PASS — SELinux: Enforcing"
+}
+
+TASK [Collect baseline service state] ******************************************
+Thursday 16 July 2026  15:57:39 +0000 (0:00:00.082)       0:00:00.677 ********* 
+ok: [servera] => (item=firewalld)
+ok: [serverb] => (item=firewalld)
+ok: [serverc] => (item=firewalld)
+ok: [serverd] => (item=firewalld)
+ok: [serverb] => (item=auditd)
+ok: [servera] => (item=auditd)
+ok: [serverc] => (item=auditd)
+ok: [serverd] => (item=auditd)
+ok: [serverb] => (item=chronyd)
+ok: [servera] => (item=chronyd)
+ok: [serverd] => (item=chronyd)
+ok: [serverc] => (item=chronyd)
+ok: [serverb] => (item=sshd)
+ok: [serverd] => (item=sshd)
+ok: [serverc] => (item=sshd)
+ok: [servera] => (item=sshd)
+
+TASK [Assert every baseline service is active] *********************************
+Thursday 16 July 2026  15:57:40 +0000 (0:00:01.588)       0:00:02.266 ********* 
+ok: [servera] => (item=firewalld) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "firewalld"
+        ],
+        "delta": "0:00:00.015363",
+        "end": "2026-07-16 11:57:39.943885",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active firewalld",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "firewalld",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:39.928522",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — firewalld: active"
+}
+ok: [servera] => (item=auditd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "auditd"
+        ],
+        "delta": "0:00:00.017019",
+        "end": "2026-07-16 11:57:40.330631",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active auditd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "auditd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:40.313612",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — auditd: active"
+}
+ok: [serverb] => (item=firewalld) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "firewalld"
+        ],
+        "delta": "0:00:00.015215",
+        "end": "2026-07-16 11:57:39.964037",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active firewalld",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "firewalld",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:39.948822",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — firewalld: active"
+}
+ok: [servera] => (item=chronyd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "chronyd"
+        ],
+        "delta": "0:00:00.022036",
+        "end": "2026-07-16 11:57:40.726667",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active chronyd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "chronyd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:40.704631",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — chronyd: active"
+}
+ok: [serverb] => (item=auditd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "auditd"
+        ],
+        "delta": "0:00:00.014547",
+        "end": "2026-07-16 11:57:40.310848",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active auditd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "auditd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:40.296301",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — auditd: active"
+}
+ok: [serverc] => (item=firewalld) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "firewalld"
+        ],
+        "delta": "0:00:00.017140",
+        "end": "2026-07-16 11:57:39.977971",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active firewalld",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "firewalld",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:39.960831",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — firewalld: active"
+}
+ok: [servera] => (item=sshd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "sshd"
+        ],
+        "delta": "0:00:00.014215",
+        "end": "2026-07-16 11:57:41.143712",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active sshd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "sshd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:41.129497",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — sshd: active"
+}
+ok: [serverb] => (item=chronyd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "chronyd"
+        ],
+        "delta": "0:00:00.014292",
+        "end": "2026-07-16 11:57:40.681490",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active chronyd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "chronyd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:40.667198",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — chronyd: active"
+}
+ok: [serverc] => (item=auditd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "auditd"
+        ],
+        "delta": "0:00:00.019628",
+        "end": "2026-07-16 11:57:40.363575",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active auditd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "auditd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:40.343947",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — auditd: active"
+}
+ok: [serverd] => (item=firewalld) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "firewalld"
+        ],
+        "delta": "0:00:00.017368",
+        "end": "2026-07-16 11:57:40.018937",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active firewalld",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "firewalld",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:40.001569",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — firewalld: active"
+}
+ok: [serverb] => (item=sshd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "sshd"
+        ],
+        "delta": "0:00:00.014753",
+        "end": "2026-07-16 11:57:41.098832",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active sshd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "sshd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:41.084079",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — sshd: active"
+}
+ok: [serverc] => (item=chronyd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "chronyd"
+        ],
+        "delta": "0:00:00.027261",
+        "end": "2026-07-16 11:57:40.738666",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active chronyd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "chronyd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:40.711405",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — chronyd: active"
+}
+ok: [serverd] => (item=auditd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "auditd"
+        ],
+        "delta": "0:00:00.019496",
+        "end": "2026-07-16 11:57:40.374187",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active auditd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "auditd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:40.354691",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — auditd: active"
+}
+ok: [serverc] => (item=sshd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "sshd"
+        ],
+        "delta": "0:00:00.014423",
+        "end": "2026-07-16 11:57:41.142483",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active sshd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "sshd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:41.128060",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — sshd: active"
+}
+ok: [serverd] => (item=chronyd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "chronyd"
+        ],
+        "delta": "0:00:00.018031",
+        "end": "2026-07-16 11:57:40.736039",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active chronyd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "chronyd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:40.718008",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — chronyd: active"
+}
+ok: [serverd] => (item=sshd) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "systemctl",
+            "is-active",
+            "sshd"
+        ],
+        "delta": "0:00:00.013694",
+        "end": "2026-07-16 11:57:41.138564",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "systemctl is-active sshd",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "sshd",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:41.124870",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "active",
+        "stdout_lines": [
+            "active"
+        ]
+    },
+    "msg": "PASS — sshd: active"
+}
+
+TASK [Collect sshd effective config] *******************************************
+Thursday 16 July 2026  15:57:41 +0000 (0:00:00.135)       0:00:02.401 ********* 
+ok: [servera]
+ok: [serverb]
+ok: [serverc]
+ok: [serverd]
+
+TASK [Assert sshd PasswordAuthentication is disabled] **************************
+Thursday 16 July 2026  15:57:41 +0000 (0:00:00.502)       0:00:02.904 ********* 
+ok: [servera] => {
+    "changed": false,
+    "msg": "PASS — sshd: PasswordAuthentication no"
+}
+ok: [serverb] => {
+    "changed": false,
+    "msg": "PASS — sshd: PasswordAuthentication no"
+}
+ok: [serverc] => {
+    "changed": false,
+    "msg": "PASS — sshd: PasswordAuthentication no"
+}
+ok: [serverd] => {
+    "changed": false,
+    "msg": "PASS — sshd: PasswordAuthentication no"
+}
+
+TASK [Wait for chrony to reach sync (bounded, non-fatal)] **********************
+Thursday 16 July 2026  15:57:41 +0000 (0:00:00.082)       0:00:02.987 ********* 
+ok: [servera]
+ok: [serverc]
+ok: [serverb]
+ok: [serverd]
+
+TASK [Collect chrony tracking status] ******************************************
+Thursday 16 July 2026  15:57:42 +0000 (0:00:00.461)       0:00:03.448 ********* 
+ok: [servera]
+ok: [serverb]
+ok: [serverc]
+ok: [serverd]
+
+TASK [Assert chrony reports Leap status Normal] ********************************
+Thursday 16 July 2026  15:57:42 +0000 (0:00:00.499)       0:00:03.948 ********* 
+ok: [servera] => {
+    "changed": false,
+    "msg": "PASS — chrony: Leap status Normal"
+}
+ok: [serverb] => {
+    "changed": false,
+    "msg": "PASS — chrony: Leap status Normal"
+}
+ok: [serverc] => {
+    "changed": false,
+    "msg": "PASS — chrony: Leap status Normal"
+}
+ok: [serverd] => {
+    "changed": false,
+    "msg": "PASS — chrony: Leap status Normal"
+}
+
+TASK [Collect disk utilization (excluding read-only filesystem types)] *********
+Thursday 16 July 2026  15:57:42 +0000 (0:00:00.114)       0:00:04.063 ********* 
+ok: [servera]
+ok: [serverb]
+ok: [serverc]
+ok: [serverd]
+
+TASK [Assert no writable filesystem above 70%] *********************************
+Thursday 16 July 2026  15:57:43 +0000 (0:00:00.460)       0:00:04.523 ********* 
+ok: [servera] => (item=/) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "/dev/mapper/almalinux-root 7 /",
+    "msg": "PASS — /: 7%"
+}
+ok: [serverb] => (item=/) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "/dev/mapper/almalinux-root 7 /",
+    "msg": "PASS — /: 7%"
+}
+ok: [servera] => (item=/boot) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "/dev/sda1 41 /boot",
+    "msg": "PASS — /boot: 41%"
+}
+ok: [serverc] => (item=/) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "/dev/mapper/almalinux-root 7 /",
+    "msg": "PASS — /: 7%"
+}
+ok: [serverb] => (item=/boot) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "/dev/sda1 41 /boot",
+    "msg": "PASS — /boot: 41%"
+}
+ok: [serverc] => (item=/boot) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "/dev/sda1 41 /boot",
+    "msg": "PASS — /boot: 41%"
+}
+ok: [serverd] => (item=/) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "/dev/mapper/almalinux-root 7 /",
+    "msg": "PASS — /: 7%"
+}
+ok: [serverd] => (item=/boot) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "/dev/sda1 41 /boot",
+    "msg": "PASS — /boot: 41%"
+}
+
+TASK [Collect firewalld services in default zone] ******************************
+Thursday 16 July 2026  15:57:43 +0000 (0:00:00.111)       0:00:04.635 ********* 
+ok: [servera]
+ok: [serverb]
+ok: [serverc]
+ok: [serverd]
+
+TASK [Assert required firewalld services are present] **************************
+Thursday 16 July 2026  15:57:44 +0000 (0:00:00.800)       0:00:05.435 ********* 
+ok: [servera] => (item=ssh) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "ssh",
+    "msg": "PASS — firewalld: ssh allowed"
+}
+ok: [serverb] => (item=ssh) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "ssh",
+    "msg": "PASS — firewalld: ssh allowed"
+}
+ok: [serverc] => (item=ssh) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "ssh",
+    "msg": "PASS — firewalld: ssh allowed"
+}
+ok: [serverd] => (item=ssh) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "ssh",
+    "msg": "PASS — firewalld: ssh allowed"
+}
+
+TASK [Check required OS groups exist] ******************************************
+Thursday 16 July 2026  15:57:44 +0000 (0:00:00.107)       0:00:05.543 ********* 
+ok: [servera] => (item=admin)
+ok: [serverb] => (item=admin)
+ok: [serverd] => (item=admin)
+ok: [serverc] => (item=admin)
+ok: [servera] => (item=operations)
+ok: [serverb] => (item=operations)
+ok: [serverd] => (item=operations)
+ok: [serverc] => (item=operations)
+
+TASK [Assert required groups exist] ********************************************
+Thursday 16 July 2026  15:57:45 +0000 (0:00:00.804)       0:00:06.348 ********* 
+ok: [servera] => (item=admin) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "getent",
+            "group",
+            "admin"
+        ],
+        "delta": "0:00:00.005917",
+        "end": "2026-07-16 11:57:44.802254",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "getent group admin",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "admin",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:44.796337",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "admin:x:1001:breakglass,admin",
+        "stdout_lines": [
+            "admin:x:1001:breakglass,admin"
+        ]
+    },
+    "msg": "PASS — group 'admin' exists"
+}
+ok: [servera] => (item=operations) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "getent",
+            "group",
+            "operations"
+        ],
+        "delta": "0:00:00.006010",
+        "end": "2026-07-16 11:57:45.158183",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "getent group operations",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "operations",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:45.152173",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "operations:x:1002:",
+        "stdout_lines": [
+            "operations:x:1002:"
+        ]
+    },
+    "msg": "PASS — group 'operations' exists"
+}
+ok: [serverb] => (item=admin) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "getent",
+            "group",
+            "admin"
+        ],
+        "delta": "0:00:00.007215",
+        "end": "2026-07-16 11:57:44.808868",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "getent group admin",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "admin",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:44.801653",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "admin:x:1001:breakglass,admin",
+        "stdout_lines": [
+            "admin:x:1001:breakglass,admin"
+        ]
+    },
+    "msg": "PASS — group 'admin' exists"
+}
+ok: [serverb] => (item=operations) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "getent",
+            "group",
+            "operations"
+        ],
+        "delta": "0:00:00.006755",
+        "end": "2026-07-16 11:57:45.171353",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "getent group operations",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "operations",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:45.164598",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "operations:x:1002:",
+        "stdout_lines": [
+            "operations:x:1002:"
+        ]
+    },
+    "msg": "PASS — group 'operations' exists"
+}
+ok: [serverc] => (item=admin) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "getent",
+            "group",
+            "admin"
+        ],
+        "delta": "0:00:00.006995",
+        "end": "2026-07-16 11:57:44.870737",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "getent group admin",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "admin",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:44.863742",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "admin:x:1001:breakglass,admin",
+        "stdout_lines": [
+            "admin:x:1001:breakglass,admin"
+        ]
+    },
+    "msg": "PASS — group 'admin' exists"
+}
+ok: [serverc] => (item=operations) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "getent",
+            "group",
+            "operations"
+        ],
+        "delta": "0:00:00.006318",
+        "end": "2026-07-16 11:57:45.231499",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "getent group operations",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "operations",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:45.225181",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "operations:x:1002:",
+        "stdout_lines": [
+            "operations:x:1002:"
+        ]
+    },
+    "msg": "PASS — group 'operations' exists"
+}
+ok: [serverd] => (item=admin) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "getent",
+            "group",
+            "admin"
+        ],
+        "delta": "0:00:00.008320",
+        "end": "2026-07-16 11:57:44.856023",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "getent group admin",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "admin",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:44.847703",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "admin:x:1001:breakglass,admin",
+        "stdout_lines": [
+            "admin:x:1001:breakglass,admin"
+        ]
+    },
+    "msg": "PASS — group 'admin' exists"
+}
+ok: [serverd] => (item=operations) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "getent",
+            "group",
+            "operations"
+        ],
+        "delta": "0:00:00.005798",
+        "end": "2026-07-16 11:57:45.194782",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "getent group operations",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "operations",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:45.188984",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "operations:x:1002:",
+        "stdout_lines": [
+            "operations:x:1002:"
+        ]
+    },
+    "msg": "PASS — group 'operations' exists"
+}
+
+TASK [Check sudoers drop-in files are present and valid] ***********************
+Thursday 16 July 2026  15:57:45 +0000 (0:00:00.095)       0:00:06.444 ********* 
+ok: [serverb] => (item=/etc/sudoers.d/wheel-nopass)
+ok: [servera] => (item=/etc/sudoers.d/wheel-nopass)
+ok: [serverc] => (item=/etc/sudoers.d/wheel-nopass)
+ok: [serverd] => (item=/etc/sudoers.d/wheel-nopass)
+ok: [serverc] => (item=/etc/sudoers.d/ops-admin)
+ok: [serverb] => (item=/etc/sudoers.d/ops-admin)
+ok: [servera] => (item=/etc/sudoers.d/ops-admin)
+ok: [serverd] => (item=/etc/sudoers.d/ops-admin)
+
+TASK [Assert sudoers drop-ins are present and valid] ***************************
+Thursday 16 July 2026  15:57:45 +0000 (0:00:00.798)       0:00:07.243 ********* 
+ok: [servera] => (item=/etc/sudoers.d/wheel-nopass) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "visudo",
+            "-cf",
+            "/etc/sudoers.d/wheel-nopass"
+        ],
+        "delta": "0:00:00.008825",
+        "end": "2026-07-16 11:57:45.697320",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "visudo -cf /etc/sudoers.d/wheel-nopass",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "/etc/sudoers.d/wheel-nopass",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:45.688495",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "/etc/sudoers.d/wheel-nopass: parsed OK",
+        "stdout_lines": [
+            "/etc/sudoers.d/wheel-nopass: parsed OK"
+        ]
+    },
+    "msg": "PASS — /etc/sudoers.d/wheel-nopass: present and valid"
+}
+ok: [servera] => (item=/etc/sudoers.d/ops-admin) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "visudo",
+            "-cf",
+            "/etc/sudoers.d/ops-admin"
+        ],
+        "delta": "0:00:00.008525",
+        "end": "2026-07-16 11:57:46.090739",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "visudo -cf /etc/sudoers.d/ops-admin",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "/etc/sudoers.d/ops-admin",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:46.082214",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "/etc/sudoers.d/ops-admin: parsed OK",
+        "stdout_lines": [
+            "/etc/sudoers.d/ops-admin: parsed OK"
+        ]
+    },
+    "msg": "PASS — /etc/sudoers.d/ops-admin: present and valid"
+}
+ok: [serverb] => (item=/etc/sudoers.d/wheel-nopass) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "visudo",
+            "-cf",
+            "/etc/sudoers.d/wheel-nopass"
+        ],
+        "delta": "0:00:00.007609",
+        "end": "2026-07-16 11:57:45.694565",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "visudo -cf /etc/sudoers.d/wheel-nopass",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "/etc/sudoers.d/wheel-nopass",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:45.686956",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "/etc/sudoers.d/wheel-nopass: parsed OK",
+        "stdout_lines": [
+            "/etc/sudoers.d/wheel-nopass: parsed OK"
+        ]
+    },
+    "msg": "PASS — /etc/sudoers.d/wheel-nopass: present and valid"
+}
+ok: [serverb] => (item=/etc/sudoers.d/ops-admin) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "visudo",
+            "-cf",
+            "/etc/sudoers.d/ops-admin"
+        ],
+        "delta": "0:00:00.008273",
+        "end": "2026-07-16 11:57:46.075172",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "visudo -cf /etc/sudoers.d/ops-admin",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "/etc/sudoers.d/ops-admin",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:46.066899",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "/etc/sudoers.d/ops-admin: parsed OK",
+        "stdout_lines": [
+            "/etc/sudoers.d/ops-admin: parsed OK"
+        ]
+    },
+    "msg": "PASS — /etc/sudoers.d/ops-admin: present and valid"
+}
+ok: [serverc] => (item=/etc/sudoers.d/wheel-nopass) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "visudo",
+            "-cf",
+            "/etc/sudoers.d/wheel-nopass"
+        ],
+        "delta": "0:00:00.007776",
+        "end": "2026-07-16 11:57:45.719615",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "visudo -cf /etc/sudoers.d/wheel-nopass",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "/etc/sudoers.d/wheel-nopass",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:45.711839",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "/etc/sudoers.d/wheel-nopass: parsed OK",
+        "stdout_lines": [
+            "/etc/sudoers.d/wheel-nopass: parsed OK"
+        ]
+    },
+    "msg": "PASS — /etc/sudoers.d/wheel-nopass: present and valid"
+}
+ok: [serverc] => (item=/etc/sudoers.d/ops-admin) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "visudo",
+            "-cf",
+            "/etc/sudoers.d/ops-admin"
+        ],
+        "delta": "0:00:00.006776",
+        "end": "2026-07-16 11:57:46.067007",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "visudo -cf /etc/sudoers.d/ops-admin",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "/etc/sudoers.d/ops-admin",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:46.060231",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "/etc/sudoers.d/ops-admin: parsed OK",
+        "stdout_lines": [
+            "/etc/sudoers.d/ops-admin: parsed OK"
+        ]
+    },
+    "msg": "PASS — /etc/sudoers.d/ops-admin: present and valid"
+}
+ok: [serverd] => (item=/etc/sudoers.d/wheel-nopass) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "visudo",
+            "-cf",
+            "/etc/sudoers.d/wheel-nopass"
+        ],
+        "delta": "0:00:00.008220",
+        "end": "2026-07-16 11:57:45.788030",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "visudo -cf /etc/sudoers.d/wheel-nopass",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "/etc/sudoers.d/wheel-nopass",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:45.779810",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "/etc/sudoers.d/wheel-nopass: parsed OK",
+        "stdout_lines": [
+            "/etc/sudoers.d/wheel-nopass: parsed OK"
+        ]
+    },
+    "msg": "PASS — /etc/sudoers.d/wheel-nopass: present and valid"
+}
+ok: [serverd] => (item=/etc/sudoers.d/ops-admin) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": {
+        "ansible_loop_var": "item",
+        "changed": false,
+        "cmd": [
+            "visudo",
+            "-cf",
+            "/etc/sudoers.d/ops-admin"
+        ],
+        "delta": "0:00:00.006980",
+        "end": "2026-07-16 11:57:46.132190",
+        "failed": false,
+        "failed_when_result": false,
+        "invocation": {
+            "module_args": {
+                "_raw_params": "visudo -cf /etc/sudoers.d/ops-admin",
+                "_uses_shell": false,
+                "argv": null,
+                "chdir": null,
+                "creates": null,
+                "executable": null,
+                "expand_argument_vars": true,
+                "removes": null,
+                "stdin": null,
+                "stdin_add_newline": true,
+                "strip_empty_ends": true
+            }
+        },
+        "item": "/etc/sudoers.d/ops-admin",
+        "msg": "",
+        "rc": 0,
+        "start": "2026-07-16 11:57:46.125210",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "/etc/sudoers.d/ops-admin: parsed OK",
+        "stdout_lines": [
+            "/etc/sudoers.d/ops-admin: parsed OK"
+        ]
+    },
+    "msg": "PASS — /etc/sudoers.d/ops-admin: present and valid"
+}
+
+TASK [Check auditd rules file exists] ******************************************
+Thursday 16 July 2026  15:57:46 +0000 (0:00:00.090)       0:00:07.334 ********* 
+ok: [serverd]
+ok: [servera]
+ok: [serverc]
+ok: [serverb]
+
+TASK [Assert auditd rules file is present] *************************************
+Thursday 16 July 2026  15:57:46 +0000 (0:00:00.579)       0:00:07.913 ********* 
+ok: [servera] => {
+    "changed": false,
+    "msg": "PASS — /etc/audit/rules.d/99-lab-audit.rules: present"
+}
+ok: [serverb] => {
+    "changed": false,
+    "msg": "PASS — /etc/audit/rules.d/99-lab-audit.rules: present"
+}
+ok: [serverc] => {
+    "changed": false,
+    "msg": "PASS — /etc/audit/rules.d/99-lab-audit.rules: present"
+}
+ok: [serverd] => {
+    "changed": false,
+    "msg": "PASS — /etc/audit/rules.d/99-lab-audit.rules: present"
+}
+
+TASK [Collect active audit rules] **********************************************
+Thursday 16 July 2026  15:57:46 +0000 (0:00:00.096)       0:00:08.010 ********* 
+ok: [serverb]
+ok: [servera]
+ok: [serverc]
+ok: [serverd]
+
+TASK [Assert required audit rule keys are active] ******************************
+Thursday 16 July 2026  15:57:47 +0000 (0:00:00.615)       0:00:08.625 ********* 
+ok: [servera] => (item=identity) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "identity",
+    "msg": "PASS — audit key 'identity' is active"
+}
+ok: [servera] => (item=sudoers) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "sudoers",
+    "msg": "PASS — audit key 'sudoers' is active"
+}
+ok: [serverb] => (item=identity) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "identity",
+    "msg": "PASS — audit key 'identity' is active"
+}
+ok: [servera] => (item=sshd_config) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "sshd_config",
+    "msg": "PASS — audit key 'sshd_config' is active"
+}
+ok: [serverb] => (item=sudoers) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "sudoers",
+    "msg": "PASS — audit key 'sudoers' is active"
+}
+ok: [serverc] => (item=identity) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "identity",
+    "msg": "PASS — audit key 'identity' is active"
+}
+ok: [servera] => (item=time_change) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "time_change",
+    "msg": "PASS — audit key 'time_change' is active"
+}
+ok: [serverb] => (item=sshd_config) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "sshd_config",
+    "msg": "PASS — audit key 'sshd_config' is active"
+}
+ok: [serverc] => (item=sudoers) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "sudoers",
+    "msg": "PASS — audit key 'sudoers' is active"
+}
+ok: [serverb] => (item=time_change) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "time_change",
+    "msg": "PASS — audit key 'time_change' is active"
+}
+ok: [serverd] => (item=identity) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "identity",
+    "msg": "PASS — audit key 'identity' is active"
+}
+ok: [serverc] => (item=sshd_config) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "sshd_config",
+    "msg": "PASS — audit key 'sshd_config' is active"
+}
+ok: [serverc] => (item=time_change) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "time_change",
+    "msg": "PASS — audit key 'time_change' is active"
+}
+ok: [serverd] => (item=sudoers) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "sudoers",
+    "msg": "PASS — audit key 'sudoers' is active"
+}
+ok: [serverd] => (item=sshd_config) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "sshd_config",
+    "msg": "PASS — audit key 'sshd_config' is active"
+}
+ok: [serverd] => (item=time_change) => {
+    "ansible_loop_var": "item",
+    "changed": false,
+    "item": "time_change",
+    "msg": "PASS — audit key 'time_change' is active"
+}
+
+TASK [Validation summary] ******************************************************
+Thursday 16 July 2026  15:57:47 +0000 (0:00:00.133)       0:00:08.759 ********* 
+ok: [servera] => {
+    "msg": "servera — all validation checks passed\n  SELinux:    Enforcing\n  Services:   firewalld, auditd, chronyd, sshd\n  sshd:       PasswordAuthentication no\n  chrony:     Leap status Normal\n  Disks:      all <= 70%\n  firewalld:  ssh allowed\n  Groups:     admin, operations\n  Sudoers:    wheel-nopass, ops-admin\n  Auditd:     rules file present, keys identity, sudoers, sshd_config, time_change active\n"
+}
+ok: [serverb] => {
+    "msg": "serverb — all validation checks passed\n  SELinux:    Enforcing\n  Services:   firewalld, auditd, chronyd, sshd\n  sshd:       PasswordAuthentication no\n  chrony:     Leap status Normal\n  Disks:      all <= 70%\n  firewalld:  ssh allowed\n  Groups:     admin, operations\n  Sudoers:    wheel-nopass, ops-admin\n  Auditd:     rules file present, keys identity, sudoers, sshd_config, time_change active\n"
+}
+ok: [serverc] => {
+    "msg": "serverc — all validation checks passed\n  SELinux:    Enforcing\n  Services:   firewalld, auditd, chronyd, sshd\n  sshd:       PasswordAuthentication no\n  chrony:     Leap status Normal\n  Disks:      all <= 70%\n  firewalld:  ssh allowed\n  Groups:     admin, operations\n  Sudoers:    wheel-nopass, ops-admin\n  Auditd:     rules file present, keys identity, sudoers, sshd_config, time_change active\n"
+}
+ok: [serverd] => {
+    "msg": "serverd — all validation checks passed\n  SELinux:    Enforcing\n  Services:   firewalld, auditd, chronyd, sshd\n  sshd:       PasswordAuthentication no\n  chrony:     Leap status Normal\n  Disks:      all <= 70%\n  firewalld:  ssh allowed\n  Groups:     admin, operations\n  Sudoers:    wheel-nopass, ops-admin\n  Auditd:     rules file present, keys identity, sudoers, sshd_config, time_change active\n"
+}
+
+PLAY RECAP *********************************************************************
+servera                    : ok=22   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+serverb                    : ok=22   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+serverc                    : ok=22   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+serverd                    : ok=22   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+Thursday 16 July 2026  15:57:47 +0000 (0:00:00.080)       0:00:08.840 ********* 
+=============================================================================== 
+Collect baseline service state ------------------------------------------ 1.59s
+Check required OS groups exist ------------------------------------------ 0.80s
+Collect firewalld services in default zone ------------------------------ 0.80s
+Check sudoers drop-in files are present and valid ----------------------- 0.80s
+Collect active audit rules ---------------------------------------------- 0.62s
+Check auditd rules file exists ------------------------------------------ 0.58s
+Collect SELinux state --------------------------------------------------- 0.54s
+Collect sshd effective config ------------------------------------------- 0.50s
+Collect chrony tracking status ------------------------------------------ 0.50s
+Wait for chrony to reach sync (bounded, non-fatal) ---------------------- 0.46s
+Collect disk utilization (excluding read-only filesystem types) --------- 0.46s
+Assert every baseline service is active --------------------------------- 0.14s
+Assert required audit rule keys are active ------------------------------ 0.13s
+Assert chrony reports Leap status Normal -------------------------------- 0.11s
+Assert no writable filesystem above 70% --------------------------------- 0.11s
+Assert required firewalld services are present -------------------------- 0.11s
+Assert auditd rules file is present ------------------------------------- 0.10s
+Assert required groups exist -------------------------------------------- 0.10s
+Assert sudoers drop-ins are present and valid --------------------------- 0.09s
+Assert sshd PasswordAuthentication is disabled -------------------------- 0.08s
+Playbook run took 0 days, 0 hours, 0 minutes, 8 seconds
