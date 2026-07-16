@@ -12,3 +12,4 @@
     - role: baseline_hardening
     - role: users
     - role: firewall
+    - role: auditd

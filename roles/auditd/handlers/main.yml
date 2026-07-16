@@ -1,0 +1,12 @@
+---
+# handlers/main.yml — auditd
+#
+# auditd cannot be restarted with 'service restart' under systemd
+# on RHEL 8+. The correct method is 'service reload' to re-read rules
+# without dropping the audit queue, or augenrules --load to compile
+# and load *.rules files from /etc/audit/rules.d/.
+
+- name: Load audit rules
+  ansible.builtin.command:
+    cmd: augenrules --load
+  changed_when: true

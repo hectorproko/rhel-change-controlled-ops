@@ -1,0 +1,81 @@
+{{ ansible_managed | comment }}
+# Source: roles/auditd/templates/99-lab-audit.rules.j2
+#
+# Lab audit rule set for rhel-oe-build-lab.
+# These rules are loaded by augenrules and compiled into
+# /etc/audit/audit.rules. View the active rule set with:
+#   auditctl -l
+
+# ---------- Global settings ----------
+
+# Flush all existing rules before loading these (clean slate).
+-D
+
+# Kernel audit buffer. Increase if auditd reports backlog overflows
+# in: journalctl -u auditd | grep backlog
+-b {{ auditd_buffer_size }}
+
+# Failure mode: 1=syslog, 2=panic
+-f {{ auditd_failure_mode }}
+
+# ---------- Identity changes ----------
+# Detects modifications to user, group, and password databases.
+# Key 'identity' maps to: ausearch -k identity
+
+-w /etc/passwd  -p wa -k identity
+-w /etc/shadow  -p wa -k identity
+-w /etc/group   -p wa -k identity
+-w /etc/gshadow -p wa -k identity
+
+# ---------- Privilege escalation (sudo / su) ----------
+# Captures changes to sudoers policy and use of privileged commands.
+# Key 'sudoers': ausearch -k sudoers
+# Key 'privileged': ausearch -k privileged
+
+-w /etc/sudoers    -p wa -k sudoers
+-w /etc/sudoers.d/ -p wa -k sudoers
+
+-a always,exit -F path=/usr/bin/sudo   -F perm=x -F auid>=1000 -F auid!=-1 -k privileged
+-a always,exit -F path=/usr/bin/su     -F perm=x -F auid>=1000 -F auid!=-1 -k privileged
+-a always,exit -F path=/usr/bin/passwd -F perm=x -F auid>=1000 -F auid!=-1 -k privileged
+
+# ---------- SSH configuration ----------
+# A change to sshd_config that slips past change management is
+# a significant security event.
+# Key 'sshd_config': ausearch -k sshd_config
+
+-w /etc/ssh/sshd_config    -p wa -k sshd_config
+-w /etc/ssh/sshd_config.d/ -p wa -k sshd_config
+
+# ---------- Time changes ----------
+# Clock manipulation can defeat log correlation and authentication.
+# Key 'time_change': ausearch -k time_change
+
+-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time_change
+-a always,exit -F arch=b32 -S adjtimex -S settimeofday -k time_change
+-a always,exit -F arch=b64 -S clock_settime -k time_change
+-a always,exit -F arch=b32 -S clock_settime -k time_change
+-w /etc/localtime -p wa -k time_change
+
+# ---------- Hostname / domain changes ----------
+# Key 'hostname_change': ausearch -k hostname_change
+
+-a always,exit -F arch=b64 -S sethostname -S setdomainname -k hostname_change
+-a always,exit -F arch=b32 -S sethostname -S setdomainname -k hostname_change
+
+# ---------- Failed file access attempts ----------
+# Catches permission-denied errors for regular users on sensitive paths.
+# High-volume in busy environments — tune the auid filter if noisy.
+# Key 'access_failure': ausearch -k access_failure
+
+-a always,exit -F arch=b64 -S open -S creat -S truncate -S ftruncate -S openat -F exit=-EACCES -F auid>=1000 -F auid!=-1 -k access_failure
+-a always,exit -F arch=b32 -S open -S creat -S truncate -S ftruncate -S openat -F exit=-EACCES -F auid>=1000 -F auid!=-1 -k access_failure
+-a always,exit -F arch=b64 -S open -S creat -S truncate -S ftruncate -S openat -F exit=-EPERM -F auid>=1000 -F auid!=-1 -k access_failure
+-a always,exit -F arch=b32 -S open -S creat -S truncate -S ftruncate -S openat -F exit=-EPERM -F auid>=1000 -F auid!=-1 -k access_failure
+
+# ---------- Lock rules (optional) ----------
+# When auditd_lock_rules is true, rules cannot be changed without
+# a reboot. Only enable after the rule set is confirmed correct.
+{% if auditd_lock_rules %}
+-e 2
+{% endif %}

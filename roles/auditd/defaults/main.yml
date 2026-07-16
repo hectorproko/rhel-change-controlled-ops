@@ -1,0 +1,24 @@
+---
+# defaults/main.yml — auditd
+#
+# Controls what gets written to the audit rules drop-in.
+# The rule file itself is in templates/99-lab-audit.rules.j2.
+
+# Path where the lab audit rules are deployed. The '99-' prefix
+# ensures these rules load last, after any vendor or OS defaults.
+auditd_rules_file: /etc/audit/rules.d/99-lab-audit.rules
+
+# Audit buffer size. The default of 8192 is sufficient for a lab
+# fleet with moderate privileged-command activity. Raise to 16384+
+# on high-traffic hosts to avoid audit backlog overflows.
+auditd_buffer_size: 8192
+
+# What to do when auditd cannot write events (disk full, etc.).
+# 'syslog': log the failure to syslog and continue (lab-safe default)
+# 'panic':  kernel panic (production STIG requirement — destructive in lab)
+auditd_failure_mode: 1  # 1 = syslog, 2 = panic
+
+# Lock audit rules after loading so they cannot be changed without a
+# reboot. Set to true only after the rule set is confirmed correct —
+# locking prevents fixing mistakes without a reboot.
+auditd_lock_rules: false

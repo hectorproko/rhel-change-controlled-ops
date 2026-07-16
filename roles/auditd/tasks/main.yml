@@ -1,0 +1,30 @@
+---
+# tasks/main.yml — auditd
+#
+# Configures auditd and deploys the lab audit rule set.
+# The audit rules cover: identity changes, privilege escalation,
+# SSH config changes, time changes, hostname changes, and
+# failed file access attempts.
+
+- name: Ensure audit package is installed
+  ansible.builtin.dnf:
+    name: audit
+    state: present
+  tags: [auditd]
+
+- name: Ensure auditd is enabled and running
+  ansible.builtin.service:
+    name: auditd
+    state: started
+    enabled: true
+  tags: [auditd]
+
+- name: Deploy lab audit rules
+  ansible.builtin.template:
+    src: 99-lab-audit.rules.j2
+    dest: "{{ auditd_rules_file }}"
+    owner: root
+    group: root
+    mode: '0640'
+  notify: Load audit rules
+  tags: [auditd]
